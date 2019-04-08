@@ -21,17 +21,20 @@ import java.util.regex.Pattern;
  */
 public class AccessLogApp {
 
-    private final static LongWritable one = new LongWritable(1);
+    private final static LongWritable ONE = new LongWritable(1);
 
 
-    private static int findStringIndex(String text, String wordToFind, int skip) {
+    /**
+     * 字符串位置查找
+     */
+    private static int findStringIndex(String text, String wordToFind, int place) {
         Pattern word = Pattern.compile(wordToFind);
         Matcher match = word.matcher(text);
 
         int c = 0;
         while (match.find()) {
             c += 1;
-            if (c == skip) {
+            if (c == place) {
                 return match.start();
             }
         }
@@ -81,7 +84,7 @@ public class AccessLogApp {
             String usStr = log.substring(idx + 1, end);
             UserAgent ua = UserAgent.parseUserAgentString(usStr);
 
-            context.write(new Text(ua.getBrowser().getName()), one);
+            context.write(new Text(ua.getBrowser().getName()), ONE);
 
         }
     }
