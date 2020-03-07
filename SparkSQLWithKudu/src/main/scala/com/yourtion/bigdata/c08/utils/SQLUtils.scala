@@ -37,4 +37,7 @@ object SQLUtils {
     ",logs.channelid,logs.mediatype,logs.email,logs.tel,logs.sex,logs.age " +
     "from logs left join " +
     "ips on logs.ip_long between ips.start_ip and ips.end_ip "
+
+  lazy val PROVINCE_CIY_SQL = "select provincename as province, cityname as city, count(1) as cnt from ods group by province, city"
+
 }

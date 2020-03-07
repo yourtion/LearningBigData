@@ -43,6 +43,8 @@ object KuduUtils {
       .option("kudu.table", tableName)
       .option("kudu.master", master)
       .save()
+
+    client.close()
   }
 
 }

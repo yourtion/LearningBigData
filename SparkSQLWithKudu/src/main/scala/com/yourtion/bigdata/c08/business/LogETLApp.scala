@@ -1,4 +1,4 @@
-package com.yourtion.bigdata.c08
+package com.yourtion.bigdata.c08.business
 
 import com.yourtion.bigdata.c08.utils.{IPUtils, KuduUtils, SQLUtils, SchemaUtils}
 import org.apache.spark.sql.SparkSession
