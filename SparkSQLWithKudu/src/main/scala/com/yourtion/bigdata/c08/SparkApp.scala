@@ -1,6 +1,6 @@
 package com.yourtion.bigdata.c08
 
-import com.yourtion.bigdata.c08.business.{LogETLProcessor, StatProvinceCityProcessor}
+import com.yourtion.bigdata.c08.business.StatAppProcessor
 import org.apache.spark.sql.SparkSession
 
 
@@ -16,10 +16,13 @@ object SparkApp {
       .getOrCreate()
 
     // Step1: ETL
-    LogETLProcessor.process(spark)
-    // Step2: 省份地址
-    StatProvinceCityProcessor.process(spark)
-
+    //    LogETLProcessor.process(spark)
+    // Step2: 省份地址统计
+    //    StatProvinceCityProcessor.process(spark)
+    // Step3: 地域分布情况统计
+    //    StatAreaProcessor.process(spark)
+    // Step4: APP分布情况统计
+    StatAppProcessor.process(spark)
     spark.stop()
   }
 

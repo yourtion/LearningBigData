@@ -110,4 +110,42 @@ object SchemaUtils {
     new Schema(columns)
   }
 
+  lazy val AREASchema: Schema = {
+    val columns = List(
+      new ColumnSchemaBuilder("province", Type.STRING).nullable(false).key(true).build(),
+      new ColumnSchemaBuilder("city", Type.STRING).nullable(false).key(true).build(),
+      new ColumnSchemaBuilder("origin_request", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("valid_request", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_request", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("bid_cnt", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("bid_success_cnt", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("bid_success_rate", Type.DOUBLE).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_display_cnt", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_click_cnt", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_click_rate", Type.DOUBLE).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_consumption", Type.DOUBLE).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_cost", Type.DOUBLE).nullable(false).build()
+    )
+    new Schema(columns)
+  }
+
+  lazy val APPSchema: Schema = {
+    val columns = List(
+      new ColumnSchemaBuilder("app_id", Type.STRING).nullable(false).key(true).build(),
+      new ColumnSchemaBuilder("app_name", Type.STRING).nullable(false).key(true).build(),
+      new ColumnSchemaBuilder("origin_request", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("valid_request", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_request", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("bid_cnt", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("bid_success_cnt", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("bid_success_rate", Type.DOUBLE).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_display_cnt", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_click_cnt", Type.INT64).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_click_rate", Type.DOUBLE).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_consumption", Type.DOUBLE).nullable(false).build(),
+      new ColumnSchemaBuilder("ad_cost", Type.DOUBLE).nullable(false).build()
+    )
+    new Schema(columns)
+  }
+
 }
