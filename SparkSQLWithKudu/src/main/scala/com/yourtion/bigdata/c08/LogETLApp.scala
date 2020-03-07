@@ -1,9 +1,7 @@
 package com.yourtion.bigdata.c08
 
-import com.yourtion.bigdata.c08.utils.{IPUtils, SQLUtils, SchemaUtils}
-import org.apache.kudu.client.CreateTableOptions
-import org.apache.kudu.client.KuduClient.KuduClientBuilder
-import org.apache.spark.sql.{SaveMode, SparkSession}
+import com.yourtion.bigdata.c08.utils.{IPUtils, KuduUtils, SQLUtils, SchemaUtils}
+import org.apache.spark.sql.SparkSession
 
 
 /**
@@ -38,9 +36,9 @@ object LogETLApp {
 
     // 注册 UDF 函数
     import org.apache.spark.sql.functions._
-    def getLongIp() = udf((ip: String) => IPUtils.ip2Long(ip))
+    def getLongIp = udf((ip: String) => IPUtils.ip2Long(ip))
 
-    jsonDF = jsonDF.withColumn("ip_long", getLongIp()($"ip"))
+    jsonDF = jsonDF.withColumn("ip_long", getLongIp($"ip"))
     // 两个 DF 进行 join，条件是 json 中的 IP 是在规则 IP 中的范围内（between ... and ...）
     // jsonDF.join(ipRuleDF, jsonDF("ip_long").between(ipRuleDF("start_ip"), ipRuleDF("end_ip"))).show(false)
 
@@ -51,28 +49,8 @@ object LogETLApp {
 
     val masterAddresses = "yhost"
     val table = "ods"
-    val client = new KuduClientBuilder(masterAddresses).build()
-    if (client.tableExists(table)) {
-      println("delete table: " + table)
-      client.deleteTable(table)
-    }
-
-    // 创建表
     val partitionId = "ip"
-    val schema = SchemaUtils.ODSSchema
-    import scala.collection.JavaConversions._
-    val options = new CreateTableOptions()
-    options.setNumReplicas(1)
-    val parCols = List(partitionId)
-    options.addHashPartitions(parCols, 3)
-    client.createTable(table, schema, options)
-
-    // 写入 Kudu
-    result.write.mode(SaveMode.Append)
-      .format("org.apache.kudu.spark.kudu")
-      .option("kudu.table", table)
-      .option("kudu.master", masterAddresses)
-      .save()
+    KuduUtils.sink(result, table, masterAddresses, SchemaUtils.ODSSchema, partitionId)
 
     spark.read.format("org.apache.kudu.spark.kudu")
       .option("kudu.table", table)
