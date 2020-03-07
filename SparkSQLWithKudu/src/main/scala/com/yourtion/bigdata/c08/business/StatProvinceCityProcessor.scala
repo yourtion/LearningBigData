@@ -1,14 +1,12 @@
 package com.yourtion.bigdata.c08.business
 
+import com.yourtion.bigdata.c08.`trait`.DataProcess
 import com.yourtion.bigdata.c08.utils.{KuduUtils, SQLUtils, SchemaUtils}
 import org.apache.spark.sql.SparkSession
 
-object StatProvinceCityApp {
-  def main(args: Array[String]): Unit = {
-    val spark = SparkSession.builder()
-      .master("local[2]").appName("StatProvinceCityApp")
-      .getOrCreate()
+object StatProvinceCityProcessor extends DataProcess {
 
+  override def process(spark: SparkSession): Unit = {
     // 从KUDU的ods表中读取数据，然后进行按照省份和城市分组统计即可
     val masterAddresses = "yhost"
     val sourceTable = "ods"
@@ -30,6 +28,5 @@ object StatProvinceCityApp {
       .option("kudu.master", masterAddresses)
       .load().show(false)
 
-    spark.stop()
   }
 }

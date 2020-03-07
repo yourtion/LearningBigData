@@ -1,5 +1,6 @@
 package com.yourtion.bigdata.c08.business
 
+import com.yourtion.bigdata.c08.`trait`.DataProcess
 import com.yourtion.bigdata.c08.utils.{IPUtils, KuduUtils, SQLUtils, SchemaUtils}
 import org.apache.spark.sql.SparkSession
 
@@ -7,12 +8,8 @@ import org.apache.spark.sql.SparkSession
 /**
  * 日志ETL清洗操作
  */
-object LogETLApp {
-  def main(args: Array[String]): Unit = {
-    val spark = SparkSession.builder()
-      .master("local[2]").appName("LogETLApp")
-      .getOrCreate()
-
+object LogETLProcessor extends DataProcess {
+  override def process(spark: SparkSession): Unit = {
     // 使用 Data Source API 加载 json 数据
     var jsonDF = spark.read.json("/tmp/data-test.json")
     // jsonDF.printSchema()
@@ -56,7 +53,5 @@ object LogETLApp {
       .option("kudu.table", table)
       .option("kudu.master", masterAddresses)
       .load().show()
-
-    spark.stop()
   }
 }
