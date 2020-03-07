@@ -3,7 +3,7 @@ package com.yourtion.bigdata.c08.utils
 import org.apache.kudu.Schema
 import org.apache.kudu.client.CreateTableOptions
 import org.apache.kudu.client.KuduClient.KuduClientBuilder
-import org.apache.spark.sql.{DataFrame, SaveMode}
+import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 
 object KuduUtils {
 
@@ -45,6 +45,13 @@ object KuduUtils {
       .save()
 
     client.close()
+  }
+
+  def load(spark: SparkSession, master: String, table: String): DataFrame = {
+    spark.read.format("org.apache.kudu.spark.kudu")
+      .option("kudu.table", table)
+      .option("kudu.master", master)
+      .load()
   }
 
 }

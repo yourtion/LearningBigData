@@ -1,7 +1,7 @@
 package com.yourtion.bigdata.c08.business
 
 import com.yourtion.bigdata.c08.`trait`.DataProcess
-import com.yourtion.bigdata.c08.utils.{IPUtils, KuduUtils, SQLUtils, SchemaUtils}
+import com.yourtion.bigdata.c08.utils._
 import org.apache.spark.sql.SparkSession
 
 
@@ -11,12 +11,15 @@ import org.apache.spark.sql.SparkSession
 object LogETLProcessor extends DataProcess {
   override def process(spark: SparkSession): Unit = {
     // 使用 Data Source API 加载 json 数据
-    var jsonDF = spark.read.json("/tmp/data-test.json")
+
+    val rawPath = DataUtils.getRawPath(spark)
+    var jsonDF = spark.read.json(rawPath)
     // jsonDF.printSchema()
     // jsonDF.show(false)
 
     import spark.implicits._
-    val ipRowRDD = spark.sparkContext.textFile("/tmp/ip.txt")
+    val ipRulePath = DataUtils.getIpPath(spark)
+    val ipRowRDD = spark.sparkContext.textFile(ipRulePath)
     // 建议使用 DF 需要将 RDD => DF 的相关操作，或者 DF 注册成表，然后进行相关操作
     val ipRuleDF = ipRowRDD.map(x => {
       val splits = x.split("\\|")
@@ -44,14 +47,11 @@ object LogETLProcessor extends DataProcess {
     val result = spark.sql(SQLUtils.SQL)
     //.show(false)
 
-    val masterAddresses = "yhost"
-    val table = "ods"
+    val masterAddresses = DataUtils.getKuduMaster(spark)
+    val table = DataUtils.getTableName("ods", spark)
     val partitionId = "ip"
     KuduUtils.sink(result, table, masterAddresses, SchemaUtils.ODSSchema, partitionId)
 
-    spark.read.format("org.apache.kudu.spark.kudu")
-      .option("kudu.table", table)
-      .option("kudu.master", masterAddresses)
-      .load().show()
+    KuduUtils.load(spark, masterAddresses, table).show()
   }
 }
