@@ -6,7 +6,7 @@
 
 使用Kudu整合Spark进行广告业务功能的实现，并针对已实现的需求代码进行调优。
 
-![](images/section1-img1.png)
+![](images/section1-img2.png)
 
 ### 统计逻辑
 
@@ -17,6 +17,7 @@
 ## 执行
 
 ```bash
+$ cp data/* /tmp/
 $ mvn package 
 $ scp target/sparksql-train-1.0.jar yhost:~/libs/ 
 ```
