@@ -22,6 +22,7 @@
         <kudu.version>1.7.0</kudu.version>
         <scala-plugin.version>4.3.1</scala-plugin.version>
         <surefire-plugin.version>2.13</surefire-plugin.version>
+        <presto.version>0.232</presto.version>
     </properties>
     <!--引入CDH的仓库-->
     <repositories>
@@ -92,6 +93,12 @@
             <groupId>org.apache.kudu</groupId>
             <artifactId>kudu-spark2_2.11</artifactId>
             <version>${kudu.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.facebook.presto</groupId>
+            <artifactId>presto-jdbc</artifactId>
+            <version>${presto.version}</version>
         </dependency>
     </dependencies>
 
