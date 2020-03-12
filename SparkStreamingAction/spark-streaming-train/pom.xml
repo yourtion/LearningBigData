@@ -21,6 +21,7 @@
         <mysql-connector.version>5.1.48</mysql-connector.version>
         <scala-plugin.version>4.3.1</scala-plugin.version>
         <surefire-plugin.version>2.13</surefire-plugin.version>
+        <jackson-core.version>2.10.3</jackson-core.version>
     </properties>
 
     <!--添加cloudera的repository-->
@@ -37,14 +38,6 @@
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
         </dependency>
-
-        <!-- Kafka 依赖-->
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.11</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
-
 
         <!-- Hadoop 依赖-->
         <dependency>
@@ -110,8 +103,24 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-scala_2.11</artifactId>
-            <version>2.10.2</version>
+            <version>${jackson-core.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.lz4</groupId>
@@ -132,7 +141,15 @@
         </dependency>
 
     </dependencies>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.1.47.Final</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
