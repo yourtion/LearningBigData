@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="WebStatStreamingApp" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.yourtion.bigdata.spark.project.WebStatStreamingApp" />
+    <module name="spark-streaming-train" />
+    <option name="PROGRAM_PARAMETERS" value="localhost:9092 streaming-project" />
+    <option name="VM_PARAMETERS" value="-Dspark.master=local[4] -Dspark.app.name=WebStatStreamingApp" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.yourtion.bigdata.spark.project.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
