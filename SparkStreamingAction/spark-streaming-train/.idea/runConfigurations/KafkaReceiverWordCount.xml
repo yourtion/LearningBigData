@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="KafkaReceiverWordCount" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.yourtion.bigdata.spark.demo.kafka.KafkaReceiverWordCount" />
+    <module name="spark-streaming-train" />
+    <option name="PROGRAM_PARAMETERS" value="127.0.0.1:2181 gyx kafka-streaming-topic 1" />
+    <option name="VM_PARAMETERS" value="-Dspark.master=local[2] -Dspark.app.name=KafkaReceiverWordCount" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.yourtion.bigdata.spark.demo.kafka.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
