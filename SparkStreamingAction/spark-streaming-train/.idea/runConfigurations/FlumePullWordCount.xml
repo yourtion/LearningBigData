@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="FlumePullWordCount" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.yourtion.bigdata.spark.demo.flume.FlumePullWordCount" />
+    <module name="spark-streaming-train" />
+    <option name="PROGRAM_PARAMETERS" value="localhost 42424" />
+    <option name="VM_PARAMETERS" value="-Dspark.master=local[2] -Dspark.app.name=FlumePullWordCount" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.yourtion.bigdata.spark.demo.flume.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
