@@ -19,7 +19,7 @@ import static com.yourtion.bigdata.spark.project.web.utils.HBaseConfig.HBASE_CLI
 public class CourseClickCountDAO {
     public static void main(String[] args) throws Exception {
         CourseClickCountDAO dao = new CourseClickCountDAO();
-        List<CourseClickCount> list = dao.query("20200314");
+        List<CourseClickCount> list = dao.query("20200315");
         for (CourseClickCount model : list) {
             System.out.println(model.getName() + " : " + model.getValue());
         }
@@ -44,5 +44,9 @@ public class CourseClickCountDAO {
         }
 
         return list;
+    }
+
+    public void getTable() {
+        HBaseUtils.getInstance().getTable(HBASE_CLICK_TABLE);
     }
 }

@@ -13,13 +13,14 @@
 
 <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
 <div id="main"
-     style="width: 600px;height:400px;position: absolute; top:50%; left: 50%; margin-top: -200px;margin-left: -300px"></div>
-
+     style="width: 1000px;height:600px;position: absolute; top:50%; left: 50%; margin-top: -300px;margin-left: -500px"></div>
 
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
-
+    var fetching = false;
+    var urlParams = new URLSearchParams(window.location.search);
+    var day = urlParams.has('day') ? "?day=" + urlParams.get('day') : "";
     // 指定图表的配置项和数据
     var option = {
         title: {
@@ -39,24 +40,10 @@
             {
                 name: '访问次数',
                 type: 'pie',
+                roseType: 'angle',
                 radius: '55%',
                 center: ['50%', '60%'],
-                data: (function () { //<![CDATA[
-                    var datas = [];
-                    $.ajax({
-                        type: "POST",
-                        url: "/course_click_count_dynamic",
-                        dataType: 'json',
-                        async: false,
-                        success: function (result) {
-                            for (var i = 0; i < result.length; i++) {
-                                datas.push({"value": result[i].value, "name": result[i].name})
-                            }
-                        }
-                    });
-                    return datas;
-                    //]]>
-                })(),
+                data: [],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -69,6 +56,34 @@
     };
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+
+    function getData() {
+        //<![CDATA[
+        if (!myChart || fetching) return;
+        fetching = true;
+        $.ajax({
+            type: "POST",
+            url: "/course_click_count_dynamic" + day,
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                var datas = [];
+                for (var i = 0; i < result.length; i++) {
+                    datas.push({"value": result[i].value, "name": result[i].name})
+                }
+                var opt = myChart.getOption();
+                opt.series[0].data = datas;
+                myChart.setOption(opt);
+                fetching = false;
+                myChart.hideLoading();
+            }
+        });
+        //]]>
+    }
+
+    myChart.showLoading();
+    getData();
+    setInterval(getData, 20000);
 </script>
 </body>
 </html>
