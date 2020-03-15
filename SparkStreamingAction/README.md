@@ -48,4 +48,7 @@ $ hbase shell
 ## TODO
 
 - [ ] 完成其他图表
--  [ ] 使用 Redis 替代 HBase
+- [ ] 优化访问体验
+- [ ] 添加自动刷新功能
+- [ ] 使用 Redis 替代 HBase
+- [ ] 替换废弃的方法与功能
