@@ -44,3 +44,8 @@ $ hbase shell
 > scan 'imooc_course_click_count'
 > scan 'imooc_course_search_count'
 ```
+
+## TODO
+
+- [ ] 完成其他图表
+-  [ ] 使用 Redis 替代 HBase
